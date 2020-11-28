@@ -47,16 +47,30 @@ def load_dataset(name):
     data_3 = []
     data_4 = []
 
-    for i, v in enumerate(desc_filtered):
-        for i2, v2 in enumerate(c['buyer_name']):
-            if i2 < 24000:
-                if v2.lower() in v and c['ckt_amount'][i] == bs['stmt_amount'][i]:
-                    data_2.append(c['buyer_name'][i])
-                    data_3.append(c['ckt_amount'][i])
+    matched_count = 0
+    no_matched_count = 0
+    for i2, v2 in enumerate(c['buyer_name']):
+        print(i2)
+        matching = [i for i, s in enumerate(desc_filtered) if v2.lower() in s]
+        if matching:
+            for i, v in enumerate(matching):
+                # print(desc_filtered[v], bs['stmt_amount'][v], v2.lower(), c['ckt_amount'][v])
+                if c['ckt_amount'][v] == bs['stmt_amount'][v]:
+                    data_2.append(c['buyer_name'][v])
+                    data_3.append(c['ckt_amount'][v])
                     data_4.append(logic_selection[0])
-            else:
-                data_2.append('')
-                data_3.append('')
+                    print('matched')
+                    matched_count += 1
+                elif i == len(matching) - 1:
+                    data_2.append('')
+                    data_3.append('')
+                    print('not match')
+                    no_matched_count += 1
+        else:
+            data_2.append('')
+            data_3.append('')
+            print('not match')
+            no_matched_count += 1
 
     df = pd.DataFrame({'Statement description': data_0,
                        'Statement amount': data_1,
