@@ -45,34 +45,28 @@ def load_dataset(name):
 
     data_0 = [i for i in desc]
     data_1 = [i for i in bs['stmt_amount']]
-    data_2 = []
-    data_3 = []
-    data_4 = []
+    data_2 = ['' for i in range(len(desc))]
+    data_3 = ['' for i in range(len(desc))]
+    data_4 = ['' for i in range(len(desc))]
 
     matched_count = 0
     no_matched_count = 0
-    for i2, v2 in enumerate(c['buyer_name']):
+    for i2, v2 in enumerate(c['buyer_name'][:limit]):
         print(i2, v2)
         matching = [i for i, s in enumerate(bs['desc']) if v2.lower() in s.lower()]
         if matching:
             for i, v in enumerate(matching):
                 # print(desc_filtered[v], bs['stmt_amount'][v], v2.lower(), c['ckt_amount'][v])
                 if c['ckt_amount'][i2] == bs['stmt_amount'][v]:
-                    data_2.append(c['buyer_name'][v])
-                    data_3.append(c['ckt_amount'][i2])
-                    data_4.append(logic_selection[0])
+                    data_2[v] = v2
+                    data_3[v] = c['ckt_amount'][i2]
+                    data_4[v] = logic_selection[0]
                     print('matched')
                     matched_count += 1
                 elif i == len(matching) - 1:
-                    data_2.append('')
-                    data_3.append('')
-                    data_4.append('')
                     print('not match')
                     no_matched_count += 1
         else:
-            data_2.append('')
-            data_3.append('')
-            data_4.append('')
             print('not match')
             no_matched_count += 1
 
@@ -83,6 +77,8 @@ def load_dataset(name):
                        'Name match logic': data_4
                        })
     df.to_csv('res.csv', index=False)
+
+    print(matched_count, no_matched_count)
 
 
 # Press the green button in the gutter to run the script.
