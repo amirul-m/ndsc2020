@@ -35,9 +35,6 @@ def load_dataset(name):
                     line_filtered.append(word)
         desc_filtered.append(' '.join(line_filtered))
 
-    print()
-    desc_fix = ' '.join(desc_filtered)
-
     logic_selection = [
         "Statement description “contains” buyer's name.",
         "Statement description does not have to contain every word in buyer’s name.",
