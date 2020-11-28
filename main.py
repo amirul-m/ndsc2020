@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 import string
+import os
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 
 # This is a sample Python script.
@@ -86,8 +89,52 @@ def load_dataset(name):
     print(matched_count, no_matched_count)
 
 
+def compare_fuzzy(desc,buyer_name):
+    return fuzz.partial_ratio(desc,buyer_name)
+
+
+def rank3_ndsc(name):
+    for dirname, _, filenames in os.walk('dataset'):
+        for filename in filenames:
+            print(os.path.join(dirname, filename))
+
+    bank = pd.read_csv('dataset/bank_statement.csv')
+    checkout = pd.read_csv('dataset/checkout.csv')
+
+    def find_match(stmt_amount, desc):
+        potential_match = checkout[checkout['ckt_amount'] == stmt_amount]
+        result = []
+        for ckt_id, buyer_name in zip(potential_match['ckt_id'], potential_match['buyer_name']):
+            score = compare_fuzzy(desc, buyer_name)
+            if score > 0:
+                result.append((ckt_id, score))
+        return result
+
+    def get_max(list_of_tuple):
+        max_score = 0
+        final_id = -1
+        for stmt_id, score in list_of_tuple:
+            if score > max_score:
+                max_score = score
+                final_id = stmt_id
+        return final_id
+
+    final_result = []
+    for stmt_id, stmt_amount, desc in zip(bank['stmt_id'], bank['stmt_amount'], bank['desc']):
+        print(stmt_id)
+        ckt_id = get_max(find_match(stmt_amount, desc))
+        final_result.append((stmt_id, ckt_id))
+
+    stmt_id = [a for a, b in final_result]
+    ckt_id = [b for a, b in final_result]
+    df = pd.DataFrame({'stmt_id': stmt_id, 'ckt_id': ckt_id})
+
+    df.to_csv('final_fuzzy.csv', index=False)
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_dataset('PyCharm')
+    # load_dataset('PyCharm')
+    rank3_ndsc('Rank 3')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
