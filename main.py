@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import string
+
+
 # This is a sample Python script.
 
 # Press Shift+F10 to execute it or replace it with your code.
@@ -26,8 +28,23 @@ def load_dataset(name):
             # remove punctuation
             word = word.translate(str.maketrans('', '', string.punctuation))
             if word:
-                if 'transfer' not in word and 'shopee' not in word and 'tf' not in word:
+                if 'transfer' not in word and 'shopee' not in word and 'tf' not in word and 'instant' not in word and 'to' not in word:
                     count_word += 1
+
+    logic_selection = [
+        "Statement description “contains” buyer's name.",
+        "Statement description does not have to contain every word in buyer’s name.",
+        "Order of the words in names does not matter.",
+        "The spelling of the words in names are not exactly the same, but very similar."
+    ]
+
+    df = pd.DataFrame({'Statement description': [i for i in desc],
+                       'Statement amount': [i for i in bs['stmt_amount']],
+                       'Buyer name': [],
+                       'Checkout amount': [],
+                       'Name match logic': []
+                       })
+    df.to_csv(index=False)
 
     print()
 
