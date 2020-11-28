@@ -42,7 +42,6 @@ def load_dataset(name):
         "The spelling of the words in names are not exactly the same, but very similar."
     ]
 
-
     data_0 = [i for i in desc]
     data_1 = [i for i in bs['stmt_amount']]
     data_2 = []
@@ -54,6 +53,7 @@ def load_dataset(name):
             if c['buyer_name'][x].lower() in d:
                 data_2.append(c['buyer_name'][x])
                 data_3.append(c['ckt_amount'][x])
+                data_4.append(logic_selection[0])
             else:
                 data_2.append('')
                 data_3.append('')
