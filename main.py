@@ -44,11 +44,17 @@ def load_dataset(name):
         "The spelling of the words in names are not exactly the same, but very similar."
     ]
 
-    df = pd.DataFrame({'Statement description': [i for i in desc],
-                       'Statement amount': [i for i in bs['stmt_amount']],
-                       'Buyer name': [],
-                       'Checkout amount': [],
-                       'Name match logic': []
+    data_0 = [i for i in desc]
+    data_1 = [i for i in bs['stmt_amount']]
+    data_2 = []
+    data_3 = []
+    data_4 = []
+
+    df = pd.DataFrame({'Statement description': data_0,
+                       'Statement amount': data_1,
+                       'Buyer name': data_2,
+                       'Checkout amount': data_3,
+                       'Name match logic': data_4
                        })
     df.to_csv(index=False)
 
