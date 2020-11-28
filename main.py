@@ -43,15 +43,17 @@ def load_dataset(name):
 
     limit = 40
 
+    data_i1 = [i for i in bs['stmt_id']]
     data_0 = [i for i in desc]
     data_1 = [i for i in bs['stmt_amount']]
     data_2 = ['' for i in range(len(desc))]
     data_3 = ['' for i in range(len(desc))]
     data_4 = ['' for i in range(len(desc))]
+    data_5 = ['' for i in range(len(desc))]
 
     matched_count = 0
     no_matched_count = 0
-    for i2, v2 in enumerate(c['buyer_name'][:limit]):
+    for i2, v2 in enumerate(c['buyer_name'][:1000]):
         print(i2, v2)
         matching = [i for i, s in enumerate(bs['desc']) if v2.lower() in s.lower()]
         if matching:
@@ -61,6 +63,7 @@ def load_dataset(name):
                     data_2[v] = v2
                     data_3[v] = c['ckt_amount'][i2]
                     data_4[v] = logic_selection[0]
+                    data_5[v] = i2
                     print('matched')
                     matched_count += 1
                 elif i == len(matching) - 1:
@@ -70,13 +73,15 @@ def load_dataset(name):
             print('not match')
             no_matched_count += 1
 
-    df = pd.DataFrame({'Statement description': data_0,
-                       'Statement amount': data_1,
-                       'Buyer name': data_2,
-                       'Checkout amount': data_3,
-                       'Name match logic': data_4
+    df = pd.DataFrame({'stmt_id': data_i1,
+                       # 'stmt_amount': data_1,
+                       # 'description': data_0,
+                       'ckt_id': data_5,
+                       # 'ckt_amount': data_3,
+                       # 'buyer_name': data_2,
+                       # 'Name match logic': data_4
                        })
-    df.to_csv('res.csv', index=False)
+    df.to_csv('res4.csv', index=False)
 
     print(matched_count, no_matched_count)
 
