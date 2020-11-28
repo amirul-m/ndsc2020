@@ -48,12 +48,13 @@ def load_dataset(name):
     data_3 = []
     data_4 = []
 
-    for x in range(240000):
-        for d in desc_filtered:
-            if c['buyer_name'][x].lower() in d:
-                data_2.append(c['buyer_name'][x])
-                data_3.append(c['ckt_amount'][x])
-                data_4.append(logic_selection[0])
+    for i, v in enumerate(desc_filtered):
+        for i2, v2 in enumerate(c['buyer_name']):
+            if i2 < 24000:
+                if v2.lower() in v:
+                    data_2.append(c['buyer_name'][x])
+                    data_3.append(c['ckt_amount'][x])
+                    data_4.append(logic_selection[0])
             else:
                 data_2.append('')
                 data_3.append('')
