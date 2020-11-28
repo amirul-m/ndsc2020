@@ -8,7 +8,6 @@ import string
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-
 def load_dataset(name):
     # Use a breakpoint in the code line below to debug your script.
     bs = pd.read_csv('dataset/bank_statement.csv')
@@ -66,9 +65,6 @@ def load_dataset(name):
                        'Name match logic': data_4
                        })
     df.to_csv('res.csv', index=False)
-
-    print()
-
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
