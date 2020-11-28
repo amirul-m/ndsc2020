@@ -33,9 +33,10 @@ def load_dataset(name):
                 if 'transfer' not in word and 'shopee' not in word and 'tf' not in word and 'instant' not in word and 'to' not in word:
                     count_word += 1
                     line_filtered.append(word)
-        desc_filtered.append(line_filtered)
+        desc_filtered.append(' '.join(line_filtered))
 
-    desc_filtered = ' '.join(desc_filtered)
+    print()
+    desc_fix = ' '.join(desc_filtered)
 
     logic_selection = [
         "Statement description “contains” buyer's name.",
