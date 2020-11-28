@@ -21,7 +21,9 @@ def load_dataset(name):
 
     # count distinct word
     count_word = 0
+    desc_filtered = []
     for x in split_x:
+        line_filtered = []
         for y in x:
             # lower and strip
             word = y.lower().strip()
@@ -30,6 +32,10 @@ def load_dataset(name):
             if word:
                 if 'transfer' not in word and 'shopee' not in word and 'tf' not in word and 'instant' not in word and 'to' not in word:
                     count_word += 1
+                    line_filtered.append(y)
+        desc_filtered.append(line_filtered)
+
+    desc_filtered = ' '.join(desc_filtered)
 
     logic_selection = [
         "Statement description “contains” buyer's name.",
