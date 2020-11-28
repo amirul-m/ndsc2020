@@ -32,7 +32,7 @@ def load_dataset(name):
             if word:
                 if 'transfer' not in word and 'shopee' not in word and 'tf' not in word and 'instant' not in word and 'to' not in word:
                     count_word += 1
-                    line_filtered.append(y)
+                    line_filtered.append(word)
         desc_filtered.append(line_filtered)
 
     desc_filtered = ' '.join(desc_filtered)
