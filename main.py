@@ -41,15 +41,17 @@ def load_dataset(name):
         "The spelling of the words in names are not exactly the same, but very similar."
     ]
 
-    data_0 = [i for i in desc]
-    data_1 = [i for i in bs['stmt_amount']]
+    limit = 10
+
+    data_0 = [i for i in desc[:limit]]
+    data_1 = [i for i in bs['stmt_amount'][:limit]]
     data_2 = []
     data_3 = []
     data_4 = []
 
     matched_count = 0
     no_matched_count = 0
-    for i2, v2 in enumerate(c['buyer_name']):
+    for i2, v2 in enumerate(c['buyer_name'][:limit]):
         print(i2)
         matching = [i for i, s in enumerate(desc_filtered) if v2.lower() in s]
         if matching:
@@ -64,11 +66,13 @@ def load_dataset(name):
                 elif i == len(matching) - 1:
                     data_2.append('')
                     data_3.append('')
+                    data_4.append('')
                     print('not match')
                     no_matched_count += 1
         else:
             data_2.append('')
             data_3.append('')
+            data_4.append('')
             print('not match')
             no_matched_count += 1
 
@@ -79,6 +83,7 @@ def load_dataset(name):
                        'Name match logic': data_4
                        })
     df.to_csv('res.csv', index=False)
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
