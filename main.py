@@ -41,25 +41,25 @@ def load_dataset(name):
         "The spelling of the words in names are not exactly the same, but very similar."
     ]
 
-    limit = 10
+    limit = 40
 
-    data_0 = [i for i in desc[:limit]]
-    data_1 = [i for i in bs['stmt_amount'][:limit]]
+    data_0 = [i for i in desc]
+    data_1 = [i for i in bs['stmt_amount']]
     data_2 = []
     data_3 = []
     data_4 = []
 
     matched_count = 0
     no_matched_count = 0
-    for i2, v2 in enumerate(c['buyer_name'][:limit]):
-        print(i2)
-        matching = [i for i, s in enumerate(desc_filtered) if v2.lower() in s]
+    for i2, v2 in enumerate(c['buyer_name']):
+        print(i2, v2)
+        matching = [i for i, s in enumerate(bs['desc']) if v2.lower() in s.lower()]
         if matching:
             for i, v in enumerate(matching):
                 # print(desc_filtered[v], bs['stmt_amount'][v], v2.lower(), c['ckt_amount'][v])
-                if c['ckt_amount'][v] == bs['stmt_amount'][v]:
+                if c['ckt_amount'][i2] == bs['stmt_amount'][v]:
                     data_2.append(c['buyer_name'][v])
-                    data_3.append(c['ckt_amount'][v])
+                    data_3.append(c['ckt_amount'][i2])
                     data_4.append(logic_selection[0])
                     print('matched')
                     matched_count += 1
