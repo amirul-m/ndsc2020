@@ -42,11 +42,21 @@ def load_dataset(name):
         "The spelling of the words in names are not exactly the same, but very similar."
     ]
 
+
     data_0 = [i for i in desc]
     data_1 = [i for i in bs['stmt_amount']]
     data_2 = []
     data_3 = []
     data_4 = []
+
+    for x in range(240000):
+        for d in desc_filtered:
+            if c['buyer_name'][x].lower() in d:
+                data_2.append(c['buyer_name'][x])
+                data_3.append(c['ckt_amount'][x])
+            else:
+                data_2.append('')
+                data_3.append('')
 
     df = pd.DataFrame({'Statement description': data_0,
                        'Statement amount': data_1,
@@ -54,7 +64,7 @@ def load_dataset(name):
                        'Checkout amount': data_3,
                        'Name match logic': data_4
                        })
-    df.to_csv(index=False)
+    df.to_csv('res.csv', index=False)
 
     print()
 
