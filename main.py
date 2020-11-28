@@ -50,9 +50,9 @@ def load_dataset(name):
     for i, v in enumerate(desc_filtered):
         for i2, v2 in enumerate(c['buyer_name']):
             if i2 < 24000:
-                if v2.lower() in v:
-                    data_2.append(c['buyer_name'][x])
-                    data_3.append(c['ckt_amount'][x])
+                if v2.lower() in v and c['ckt_amount'][i] == bs['stmt_amount'][i]:
+                    data_2.append(c['buyer_name'][i])
+                    data_3.append(c['ckt_amount'][i])
                     data_4.append(logic_selection[0])
             else:
                 data_2.append('')
